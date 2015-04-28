@@ -199,6 +199,19 @@ class SessionStoreTest extends AbstractDbTestCase
         $this->assertFalse($result);
     }
 
+    public function testGetAccessTokenId()
+    {
+        $sessionId = 123;
+        $accessToken = SecureKey::make();
+        $expireTime = time();
+
+        $accessTokenId = $this->store->associateAccessToken($sessionId, $accessToken, $expireTime);
+
+        $result = $this->store->getAccessTokenId($accessToken);
+
+        $this->assertEquals($accessTokenId, $result['id']);
+    }
+
     public function testRemoveRefreshToken()
     {
         $refreshToken = SecureKey::make();

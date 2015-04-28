@@ -193,6 +193,20 @@ class SessionStore implements SessionInterface
     }
 
     /**
+     * Get Id from access token
+     *
+     * @param  string     $accessToken The access token
+     * @return mixed
+     */
+    public function getAccessTokenId($accessToken)
+    {
+        $sql = 'SELECT id FROM `oauth_session_access_tokens` WHERE access_token = :accessToken';
+        $params = array('accessToken' => $accessToken);
+
+        return $this->conn->fetchAssoc($sql, $params);
+    }
+
+    /**
      * Removes a refresh token
      *
      * @param  string $refreshToken The refresh token to be removed
